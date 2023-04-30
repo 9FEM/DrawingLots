@@ -11,20 +11,27 @@ allPeople = allPeople ?? [];
 
 const memberWrap = document.createElement("div");
 
-nameWrap.style.fontSize = "30px";
 teamWrap.appendChild(memberWrap);
 
 memberWrap.classList.add("member-wrap");
 
-// teamNameWrap.appendChild(teamMemberList);
-
 render();
 
-btnPersonName.addEventListener("click", () => {
+function addPeople() {
   let name = person.value;
   allPeople.push({ name });
   localStorage.setItem("allPeople", JSON.stringify(allPeople));
   person.value = "";
+}
+
+btnPersonName.addEventListener("click", () => {
+  person.addEventListener("keydown", (e) => {
+    if (window.event.keyCode == 13) {
+      addPeople();
+      render();
+    }
+  });
+  addPeople();
   render();
 });
 
@@ -37,12 +44,6 @@ function render() {
 let allPeopleCount = allPeople.length;
 btnCount.addEventListener("click", () => {
   let teamCount = teamCnt.value;
-
-  // let teamCount = Math.floor(allPeople.length / teamCount);
-
-  // if (teamCount === 1) {
-  //   // teamCount++;
-  // }
 
   for (let i = 0; i < teamCount; i++) {
     const teamNameWrap = document.createElement("div");
