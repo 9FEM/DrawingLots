@@ -1,37 +1,59 @@
 <!DOCTYPE html>
 <html lang="ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>DrawingLots</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/normalize.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>DrawingLots</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/normalize.css">
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-
-<body>
-  <h1 class="a11y-hidden">DrawingLots</h1>
-  <div class="wrap container m-auto mt-20 p-7">
-    <div class="flex-wrap flex justify-around">
-      <div class="person-wrap">
-        <h2 class="text-lg mb-3">팀원의 이름을 추가해주세요.</h2>
-        <label for="person"></label>
-        <input id="person" class="border border-gray-300 rounded-lg py-1 px-4" type="text" required>
-        <button class="btn-person_name border rounded-lg py-1 px-4 bg-cyan-600 text-white" type="button">추가</button>
+  <body>
+    <h1 class="a11y-hidden">DrawingLots</h1>
+    <div class="wrap container m-auto mt-20 p-7">
+      <div class="flex-wrap flex justify-around">
+        <div class="person-wrap">
+          <h2 class="text-lg mb-3">팀원의 이름을 추가해주세요.</h2>
+          <label for="person"></label>
+          <input
+            id="person"
+            class="border border-gray-300 rounded-lg py-1 px-4"
+            type="text"
+            required
+          />
+          <button
+            class="btn-person_name border rounded-lg py-1 px-4 bg-cyan-600 text-white"
+            type="button"
+          >
+            추가
+          </button>
+        </div>
+        <div class="count-wrap">
+          <h2 class="text-lg mb-3">한 팀당 인원 수를 정해주세요.</h2>
+          <label for="count"></label>
+          <input
+            id="count"
+            class="border border-gray-300 rounded-lg py-1 pl-8"
+            type="number"
+            min="0"
+            max="20"
+            required
+          />
+          <button
+            class="btn-count border rounded-lg py-1 px-4 bg-cyan-600 text-white"
+            type="button"
+          >
+            완료
+          </button>
+        </div>
       </div>
-      <div class="count-wrap">
-        <h2 class="text-lg mb-3">한 팀당 인원 수를 정해주세요.</h2>
-        <label for="count"></label>
-        <input id="count" class="border border-gray-300 rounded-lg py-1 pl-8" type="number" min="0" max="20" required>
-        <button class="btn-count border rounded-lg py-1 px-4 bg-cyan-600 text-white" type="button">완료</button>
+
+      <div class="team-wrap">
+        <div class="name-wrap"></div>
       </div>
     </div>
-
-    <div class="team-wrap">
-    </div>
-  </div>
-</body>
-
+    <script src="./js/script.js"></script>
+  </body>
 </html>
