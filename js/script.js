@@ -1,5 +1,5 @@
 const person = document.querySelector("#person");
-const personCnt = document.querySelector("#count");
+const teamCnt = document.querySelector("#count");
 const btnPersonName = document.querySelector(".btn-person_name");
 const btnCount = document.querySelector(".btn-count");
 const teamWrap = document.querySelector(".team-wrap");
@@ -29,21 +29,20 @@ btnPersonName.addEventListener("click", () => {
 });
 
 function render() {
-  //   teamMemberList.textContent = "";
   nameWrap.textContent = "";
   allPeople.forEach((element) => {
-    // teamMemberList.textContent += element.name + " ";
     nameWrap.textContent += element.name + " ";
   });
 }
-
+let allPeopleCount = allPeople.length;
 btnCount.addEventListener("click", () => {
-  let personCount = personCnt.value;
-  let teamCount = Math.floor(allPeople.length / personCount);
+  let teamCount = teamCnt.value;
 
-  if (teamCount === 1) {
-    teamCount++;
-  }
+  // let teamCount = Math.floor(allPeople.length / teamCount);
+
+  // if (teamCount === 1) {
+  //   // teamCount++;
+  // }
 
   for (let i = 0; i < teamCount; i++) {
     const teamNameWrap = document.createElement("div");
@@ -54,41 +53,54 @@ btnCount.addEventListener("click", () => {
     teamNameWrap.appendChild(teamName);
     teamName.classList.add("team-name");
     teamName.textContent = `${i + 1}팀 (${allPeople.length}명)`;
+
+    const teamMemberList = document.createElement("p");
+    teamMemberList.classList.add("team-member-list");
+    teamNameWrap.appendChild(teamMemberList);
   }
+
+  const arrayTeamMemberList = Array.from(
+    memberWrap.querySelectorAll(".team-member-list")
+  );
 
   let shakeTeam = [];
 
-  for (let i = 0; i < allPeople.length; i++) {
+  let teamArray = [];
+
+  for (let i = 0; i < allPeopleCount; i++) {
     shakeTeam.push(allPeople[i].name);
   }
   shuffle(shakeTeam);
 
-  const nameWrapDiv = document.querySelectorAll(".team-name-wrap");
-  const memberWrapDiv = document.querySelectorAll(".team-member-list");
+  console.log(shakeTeam);
+  // console.log(shakeTeam.splice(0, a));
 
-  const lastElement = shakeTeam[0];
+  for (let i = 0; i < teamCount; i++) {
+    let a = Math.floor(allPeopleCount / teamCount);
+    let b = Math.ceil(allPeopleCount / teamCount);
 
-  let cnt = 0;
+    if (teamCount < 3) {
+      teamArray.push(shakeTeam.splice(0, a));
+      console.log(teamArray);
+    } else {
+      teamArray.push(shakeTeam.splice(0, b));
+      console.log(teamArray);
+    }
+  }
+  // console.log(teamArray);
+  for (let i = 0; i < teamCount; i++) {
+    arrayTeamMemberList[i].textContent = teamArray[i];
+  }
 
-  shakeTeam.forEach((teamEl) => {
-    cnt = 0;
-    nameWrapDiv.forEach((wrapEl) => {
-      const teamMemberList = document.createElement("p");
-      teamMemberList.classList.add("team-member-list");
-      wrapEl.appendChild(teamMemberList);
-
-      for (let i = 0; i < personCount; i++) {
-        teamMemberList.textContent += shakeTeam.pop() + " ";
-      }
-      console.log(cnt);
-      console.log(teamCount);
-      if (allPeople.length % 2 === 1 && cnt === teamCount - 1) {
-        console.log(lastElement);
-        teamMemberList.textContent += lastElement;
-      }
-      cnt++;
-    });
-  });
+  // for (let i = 0; i < teamCount; i++) {
+  //   for (let j = 0; j < teamCount; j++) {
+  //     if (shakeTeam[j] === []) {
+  //       console.log("empty");
+  //       break;
+  //     }
+  //     teamArray.push(shakeTeam[j]);
+  //   }
+  // }
 });
 
 function shuffle(array) {
