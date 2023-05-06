@@ -1,113 +1,133 @@
-const person = document.querySelector("#person");
-const teamCnt = document.querySelector("#count");
-const btnPersonName = document.querySelector(".btn-person_name");
-const btnCount = document.querySelector(".btn-count");
-const teamWrap = document.querySelector(".team-wrap");
-const mainWrap = document.querySelector(".wrap");
-const nameWrap = document.querySelector(".name-wrap");
+'use strict';
 
-let allPeople = JSON.parse(localStorage.getItem("allPeople"));
+const person = document.querySelector('#person');
+const teamCnt = document.querySelector('#count');
+const btnPersonName = document.querySelector('.btn-person_name');
+const btnCount = document.querySelector('.btn-count');
+const teamWrap = document.querySelector('.team-wrap');
+const mainWrap = document.querySelector('.wrap');
+const nameWrap = document.querySelector('.name-wrap');
+
+let allPeople = JSON.parse(localStorage.getItem('allPeople'));
 allPeople = allPeople ?? [];
 
-const memberWrap = document.createElement("div");
+// 추가되는 사람 배열
+let personArr = [];
 
-teamWrap.appendChild(memberWrap);
+function render() {
+  nameWrap.textContent = '';
+  allPeople.forEach((element) => {
+    nameWrap.textContent += element.name + ' ';
+  });
 
-memberWrap.classList.add("member-wrap");
+  allPeople.forEach((el) => {
+    personArr.push(el.name);
+  });
+}
 
 render();
 
-function addPeople() {
-  let name = person.value;
-  allPeople.push({ name });
-  localStorage.setItem("allPeople", JSON.stringify(allPeople));
-  person.value = "";
+if (nameWrap.textContent !== '') {
+  nameWrap.classList.add('border', 'border-gray-300');
 }
 
-btnPersonName.addEventListener("click", () => {
-  person.addEventListener("keydown", (e) => {
-    if (window.event.keyCode == 13) {
-      addPeople();
-      render();
-    }
-  });
+function addPeople() {
+  const name = person.value;
+  // name 값이 빈 문자열인 경우 로컬스토리지에 안들어가게
+  if (name === '') {
+    return;
+  }
+  allPeople.push({ name });
+  localStorage.setItem('allPeople', JSON.stringify(allPeople));
+  person.value = '';
+}
+
+//* 추가버튼 키보드
+person.addEventListener('keydown', (e) => {
+  if (window.event.keyCode == 13) {
+    addPeople();
+    render();
+  }
+});
+
+//* 추가버튼
+btnPersonName.addEventListener('click', () => {
   addPeople();
   render();
 });
 
-function render() {
-  nameWrap.textContent = "";
-  allPeople.forEach((element) => {
-    nameWrap.textContent += element.name + " ";
-  });
-}
 let allPeopleCount = allPeople.length;
-btnCount.addEventListener("click", () => {
+
+//* 완료버튼
+btnCount.addEventListener('click', () => {
   let teamCount = teamCnt.value;
 
-  for (let i = 0; i < teamCount; i++) {
-    const teamNameWrap = document.createElement("div");
-    teamNameWrap.classList.add("team-name-wrap");
-    memberWrap.appendChild(teamNameWrap);
+  if (personArr.length < teamCount) {
+    alert('현재 팀원보다 팀 수가 많습니다!');
+  } else {
+    const memberWrap = document.createElement('div');
+    teamWrap.appendChild(memberWrap);
+    memberWrap.classList.add('member-wrap');
 
-    const teamName = document.createElement("h2");
-    teamNameWrap.appendChild(teamName);
-    teamName.classList.add("team-name");
-    teamName.textContent = `${i + 1}팀 (${allPeople.length}명)`;
+    for (let i = 0; i < teamCount; i++) {
+      const teamNameWrap = document.createElement('div');
+      teamNameWrap.classList.add('team-name-wrap');
+      memberWrap.appendChild(teamNameWrap);
 
-    const teamMemberList = document.createElement("p");
-    teamMemberList.classList.add("team-member-list");
-    teamNameWrap.appendChild(teamMemberList);
-  }
+      const teamName = document.createElement('h2');
+      teamNameWrap.appendChild(teamName);
+      teamName.classList.add('team-name');
+      const teamMemberList = document.createElement('p');
+      teamMemberList.classList.add('team-member-list');
+      teamNameWrap.appendChild(teamMemberList);
 
-  const arrayTeamMemberList = Array.from(
-    memberWrap.querySelectorAll(".team-member-list")
-  );
-
-  let shakeTeam = [];
-
-  let teamArray = [];
-
-  for (let i = 0; i < allPeopleCount; i++) {
-    shakeTeam.push(allPeople[i].name);
-  }
-  shuffle(shakeTeam);
-
-  console.log(shakeTeam);
-  // console.log(shakeTeam.splice(0, a));
-
-  for (let i = 0; i < teamCount; i++) {
-    let a = Math.floor(allPeopleCount / teamCount);
-    let b = Math.ceil(allPeopleCount / teamCount);
-
-    if (teamCount < 3) {
-      teamArray.push(shakeTeam.splice(0, a));
-      console.log(teamArray);
-    } else {
-      teamArray.push(shakeTeam.splice(0, b));
-      console.log(teamArray);
+      //* 다시하기 버튼
+      const btnAgain = document.createElement('button');
+      btnAgain.classList.add('btn-again');
+      teamWrap.appendChild(btnAgain);
     }
-  }
-  // console.log(teamArray);
-  for (let i = 0; i < teamCount; i++) {
-    arrayTeamMemberList[i].textContent = teamArray[i];
-  }
+    // btnAgain.textContent = '다시 하기';
 
-  // for (let i = 0; i < teamCount; i++) {
-  //   for (let j = 0; j < teamCount; j++) {
-  //     if (shakeTeam[j] === []) {
-  //       console.log("empty");
-  //       break;
-  //     }
-  //     teamArray.push(shakeTeam[j]);
-  //   }
-  // }
+    function divideIntoTeams(names, teamCount) {
+      // 입력된 이름을 랜덤하게 섞기
+      const shuffledNames = names.sort(() => Math.random() - 0.5);
+
+      const teams = [];
+
+      // 각 팀에 인원 배정
+      for (let i = 0; i < teamCount; i++) {
+        teams.push([]);
+      }
+
+      let currentTeamIndex = 0;
+      shuffledNames.forEach((name) => {
+        teams[currentTeamIndex].push(name);
+        currentTeamIndex = (currentTeamIndex + 1) % teamCount;
+      });
+
+      return teams;
+    }
+
+    const teamNames = document.querySelectorAll('.team-name');
+    const teamsArr = divideIntoTeams(personArr, teamCount);
+    const teamMemberLists = document.querySelectorAll('.team-member-list');
+    let teamMemberListLength = [];
+
+    teamMemberLists.forEach((element, index) => {
+      const teamMembers = teamsArr[index];
+
+      teamMembers.forEach((memberName) => {
+        element.textContent += memberName + ' ';
+      });
+    });
+
+    teamNames.forEach((element, index) => {
+      element.textContent = `${index + 1}팀 (${allPeople.length}명)`;
+    });
+  }
 });
 
-function shuffle(array) {
-  array.sort(() => Math.random() - 0.5);
-}
-
+//* 삭제버튼
 function remove() {
   const idx = allPeople.find((item) => item.len == event.srcElement.id);
   if (idx) {
@@ -116,5 +136,5 @@ function remove() {
       1
     );
   }
-  localStorage.setItem("allPeople", JSON.stringify(allPeople));
+  localStorage.setItem('allPeople', JSON.stringify(allPeople));
 }

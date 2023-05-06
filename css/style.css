@@ -1,3 +1,7 @@
+:root {
+  --gray: rgb(209 213 219);
+}
+
 .a11y-hidden {
   clip: rect(1px, 1px, 1px, 1px);
   clip-path: inset(50%);
@@ -7,4 +11,15 @@
   overflow: hidden;
   padding: 0;
   position: absolute;
+}
+
+.name-wrap {
+  margin-top: 30px;
+  font-size: 1.2rem;
+  padding: 30px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
