@@ -27,13 +27,14 @@ function render() {
     personArr.push(el.name);
   });
   allPeople = JSON.parse(localStorage.getItem("allPeople"));
-}
-
-if (nameWrap.textContent !== "") {
-  nameWrap.classList.add("border", "border-gray-300");
+  if (nameWrap.textContent !== "") {
+    nameWrap.classList.add("border", "border-gray-300");
+  }
 }
 
 function addPeople() {
+  allPeople = allPeople ?? [];
+
   const name = person.value;
   // name 값이 빈 문자열인 경우 로컬스토리지에 안들어가게
   if (name === "") {
@@ -58,7 +59,7 @@ btnPersonName.addEventListener("click", () => {
   render();
 });
 
-let allPeopleCount = allPeople.length;
+// let allPeopleCount = allPeople.length;
 
 //* 완료버튼
 btnCount.addEventListener("click", () => {
@@ -188,7 +189,7 @@ function createBtnMemberManagement() {
   teamManager.appendChild(btnMemberManagement);
 }
 
-//팀원관리 모달 내용 생성.
+//팀원관리모달 팀원이름 생성.
 function memberManagement() {
   const deleteMemberContainer = document.querySelector(
     ".modal-delete-member-container"
