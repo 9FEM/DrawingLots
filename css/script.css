@@ -2,13 +2,14 @@
   background-color: antiquewhite;
 }
 .management {
-  background-color: antiquewhite;
+  background-color: rgb(201, 127, 30);
 }
 .deleteMember {
   width: 50px;
   height: 25px;
   margin: 5px;
+  font-weight: bold;
 }
 .deleteMember:hover {
-  background-color: aquamarine;
+  background-color: rgb(206, 33, 33);
 }
