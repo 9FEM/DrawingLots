@@ -1,0 +1,13 @@
+.btn-again {
+  background-color: antiquewhite;
+}
+.management {
+  background-color: antiquewhite;
+}
+.deleteMember {
+  width: 50px;
+  height: 25px;
+}
+.deleteMember:hover {
+  background-color: aquamarine;
+}
