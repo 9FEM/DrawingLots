@@ -1,15 +1,16 @@
 // "use strict";
 
-const person = document.querySelector("#person");
-const teamCnt = document.querySelector("#count");
-const btnPersonName = document.querySelector(".btn-person_name");
-const btnCount = document.querySelector(".btn-count");
-const teamWrap = document.querySelector(".team-wrap");
-const mainWrap = document.querySelector(".wrap");
-const nameWrap = document.querySelector(".name-wrap");
-const teamManager = document.querySelector(".team-manager");
+const person = document.querySelector('#person');
+const teamCnt = document.querySelector('#count');
+const btnPersonName = document.querySelector('.btn-person_name');
+const btnCount = document.querySelector('.btn-count');
+const teamWrap = document.querySelector('.team-wrap');
+const mainWrap = document.querySelector('.wrap');
+const nameWrap = document.querySelector('.name-wrap');
+const teamManager = document.querySelector('.team-manager');
+const addTeamManagement = document.querySelector('#add-team-wrap');
 
-let allPeople = JSON.parse(localStorage.getItem("allPeople"));
+let allPeople = JSON.parse(localStorage.getItem('allPeople'));
 allPeople = allPeople ?? [];
 
 // 추가되는 사람 배열
@@ -18,18 +19,52 @@ render();
 
 function render() {
   personArr = [];
-  nameWrap.textContent = "";
-  allPeople.forEach((element) => {
-    nameWrap.textContent += element.name + " ";
-  });
+  const isMemberWrap = document.querySelector('.member-wrap');
+  if (!isMemberWrap) {
+    const addedMemberWrap = document.createElement('div');
+    addedMemberWrap.classList.add(
+      'mt-10',
+      'p-5',
+      'rounded-xl',
+      'text-xl',
+      'dark:bg-slate-700',
+      'bg-indigo-200'
+    );
+    addTeamManagement.appendChild(addedMemberWrap);
+    const title = document.createElement('h2');
+    title.textContent = '추가된 팀원';
+    title.classList.add(
+      'text-xl',
+      'font-bold',
+      'text-indigo-500',
+      'dark:text-slate-100',
+      'mb-5'
+    );
+    addedMemberWrap.appendChild(title);
+    const memberWrap = document.createElement('div');
+    memberWrap.classList.add('member-wrap', 'flex', 'flex-wrap', 'gap-5');
+    addedMemberWrap.appendChild(memberWrap);
+
+    allPeople.forEach((el) => {
+      const member = document.createElement('p');
+      member.textContent = el.name;
+      member.classList.add('text-indigo-900', 'dark:text-white');
+      memberWrap.appendChild(member);
+    });
+  } else {
+    const member = document.createElement('p');
+    member.textContent = person.value;
+    member.classList.add('dark:text-white', 'text-indigo-800');
+    isMemberWrap.appendChild(member);
+    person.value = '';
+  }
+
+  person.value = '';
 
   allPeople.forEach((el) => {
     personArr.push(el.name);
   });
-  allPeople = JSON.parse(localStorage.getItem("allPeople"));
-  if (nameWrap.textContent !== "") {
-    nameWrap.classList.add("border", "border-gray-300");
-  }
+  // allPeople.JSON.parse(localStorage.getItem('allPeople'));
 }
 
 function addPeople() {
@@ -37,16 +72,15 @@ function addPeople() {
 
   const name = person.value;
   // name 값이 빈 문자열인 경우 로컬스토리지에 안들어가게
-  if (name === "") {
+  if (name === '') {
     return;
   }
   allPeople.push({ name, len: allPeople.length + 1 });
-  localStorage.setItem("allPeople", JSON.stringify(allPeople));
-  person.value = "";
+  localStorage.setItem('allPeople', JSON.stringify(allPeople));
 }
 
 //* 추가버튼 키보드
-person.addEventListener("keydown", (e) => {
+person.addEventListener('keydown', (e) => {
   if (window.event.keyCode == 13) {
     addPeople();
     render();
@@ -54,7 +88,7 @@ person.addEventListener("keydown", (e) => {
 });
 
 //* 추가버튼
-btnPersonName.addEventListener("click", () => {
+btnPersonName.addEventListener('click', () => {
   addPeople();
   render();
 });
@@ -62,29 +96,29 @@ btnPersonName.addEventListener("click", () => {
 // let allPeopleCount = allPeople.length;
 
 //* 완료버튼
-btnCount.addEventListener("click", () => {
+btnCount.addEventListener('click', () => {
   teamWrap.innerHTML = ``;
-  allPeople = JSON.parse(localStorage.getItem("allPeople"));
+  allPeople = JSON.parse(localStorage.getItem('allPeople'));
 
   let teamCount = teamCnt.value;
 
   if (personArr.length < teamCount) {
-    alert("현재 팀원보다 팀 수가 많습니다!");
+    alert('현재 팀원보다 팀 수가 많습니다!');
   } else {
-    const memberWrap = document.createElement("div");
+    const memberWrap = document.createElement('div');
     teamWrap.appendChild(memberWrap);
-    memberWrap.classList.add("member-wrap");
+    memberWrap.classList.add('member-wrap');
 
     for (let i = 0; i < teamCount; i++) {
-      const teamNameWrap = document.createElement("div");
-      teamNameWrap.classList.add("team-name-wrap");
+      const teamNameWrap = document.createElement('div');
+      teamNameWrap.classList.add('team-name-wrap');
       memberWrap.appendChild(teamNameWrap);
 
-      const teamName = document.createElement("h2");
+      const teamName = document.createElement('h2');
       teamNameWrap.appendChild(teamName);
-      teamName.classList.add("team-name");
-      const teamMemberList = document.createElement("p");
-      teamMemberList.classList.add("team-member-list");
+      teamName.classList.add('team-name');
+      const teamMemberList = document.createElement('p');
+      teamMemberList.classList.add('team-member-list');
       teamNameWrap.appendChild(teamMemberList);
     }
 
@@ -108,9 +142,9 @@ btnCount.addEventListener("click", () => {
       return teams;
     }
 
-    const teamNames = document.querySelectorAll(".team-name");
+    const teamNames = document.querySelectorAll('.team-name');
     const teamsArr = divideIntoTeams(personArr, teamCount);
-    const teamMemberLists = document.querySelectorAll(".team-member-list");
+    const teamMemberLists = document.querySelectorAll('.team-member-list');
     let teamMemberListLength = [];
     let teamMemberNameList = [];
     console.log(teamsArr);
@@ -148,16 +182,16 @@ btnCount.addEventListener("click", () => {
 
 //다시하기 버튼 생성.
 function createBtnDrawingAgain() {
-  const btnAgain = document.createElement("button");
-  btnAgain.classList.add("btn-again");
+  const btnAgain = document.createElement('button');
+  btnAgain.classList.add('btn-again');
   teamWrap.appendChild(btnAgain);
-  btnAgain.setAttribute("onclick", "drawingAgain()");
-  btnAgain.textContent = "다시 하기";
+  btnAgain.setAttribute('onclick', 'drawingAgain()');
+  btnAgain.textContent = '다시 하기';
 }
 
 //다시하기
 function drawingAgain() {
-  const memberWrap = document.querySelector(".member-wrap");
+  const memberWrap = document.querySelector('.member-wrap');
   memberWrap.innerHTML = ``;
   teamWrap.innerHTML = ``;
   teamCnt.value = ``;
@@ -173,7 +207,7 @@ function remove() {
       1
     );
   }
-  localStorage.setItem("allPeople", JSON.stringify(allPeople));
+  localStorage.setItem('allPeople', JSON.stringify(allPeople));
 
   render();
   memberManagement();
@@ -181,27 +215,27 @@ function remove() {
 //팀원관리 생성.
 createBtnMemberManagement();
 function createBtnMemberManagement() {
-  const btnMemberManagement = document.createElement("button");
-  btnMemberManagement.classList.add("management");
-  btnMemberManagement.classList.add("open-result-modal-button");
-  btnMemberManagement.setAttribute("onclick", "memberManagement()");
-  btnMemberManagement.textContent = "팀원관리";
+  const btnMemberManagement = document.createElement('button');
+  btnMemberManagement.classList.add('management');
+  btnMemberManagement.classList.add('open-result-modal-button');
+  btnMemberManagement.setAttribute('onclick', 'memberManagement()');
+  btnMemberManagement.textContent = '팀원관리';
   teamManager.appendChild(btnMemberManagement);
 }
 
 //팀원관리모달 팀원이름 생성.
 function memberManagement() {
   const deleteMemberContainer = document.querySelector(
-    ".modal-delete-member-container"
+    '.modal-delete-member-container'
   );
   deleteMemberContainer.innerHTML = ``;
 
   for (const item of allPeople) {
-    const deleteMember = document.createElement("button");
-    deleteMember.classList.add("deleteMember");
+    const deleteMember = document.createElement('button');
+    deleteMember.classList.add('deleteMember');
     deleteMember.textContent = item.name;
     deleteMemberContainer.appendChild(deleteMember);
-    deleteMember.setAttribute("id", item.len);
-    deleteMember.setAttribute("onclick", "remove()");
+    deleteMember.setAttribute('id', item.len);
+    deleteMember.setAttribute('onclick', 'remove()');
   }
 }
