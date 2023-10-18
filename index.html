@@ -1,73 +1,66 @@
 <!DOCTYPE html>
 <html lang="ko-KR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <title>DrawingLots</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <!-- <link rel="stylesheet" href="css/normalize.css" /> -->
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
 
-  <body>
-    <h1 class="a11y-hidden">DrawingLots</h1>
-    <div class="wrap container m-auto mt-20 p-7">
-      <div class="flex-wrap flex justify-around">
-        <div class="person-wrap">
-          <h2 class="text-lg mb-3">팀원의 이름을 추가해주세요.</h2>
-          <label for="person"></label>
-          <input
-            id="person"
-            class="border border-gray-300 rounded-lg py-1 px-4"
-            type="text"
-            required
-          />
-          <button
-            class="btn-person_name border rounded-lg py-1 px-4 bg-cyan-600 text-white"
-            type="button"
-          >
-            추가
-          </button>
-        </div>
-        <div class="count-wrap">
-          <h2 class="text-lg mb-3">몇 팀으로 나눌까요 ?</h2>
-          <label for="count"></label>
-          <input
-            id="count"
-            class="border border-gray-300 rounded-lg py-1 pl-8"
-            type="number"
-            min="2"
-            max="10"
-            required
-          />
-          <button
-            class="btn-count border rounded-lg py-1 px-4 bg-cyan-600 text-white"
-            type="button"
-          >
-            완료
-          </button>
-        </div>
-      </div>
-      <div class="name-wrap"></div>
-      <div class="team-manager mt-3 mb-3"></div>
-      <div class="team-wrap"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>DrawingLots</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-white dark:bg-gray-900">
+  <header class="p-5 bg-indigo-500 dark:bg-indigo-900 text-white">
+    <div class="container m-auto flex gap-60">
+      <h1 class="text-2xl">Drawing Lots</h1>
+      <nav class="flex gap-10">
+        <!-- hover 기능 넣기 -->
+        <button>팀나누기</button>
+        <button>예정</button>
+        <button>예정</button>
+        <button>예정</button>
+      </nav>
     </div>
-    <!-- 모달창 -->
-    <div class="modal">
-      <div class="modal-inner p-10">
-        <div class="modal-close">
-          <svg viewbox="0 0 40 40">
-            <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
-          </svg>
-        </div>
-        <div class="modal-delete-member-container">
-          <p>삭제할 팀원을 선택해주세요.</p>
-        </div>
+  </header>
+  <div class="wrap container m-auto mt-20">
+    <div id="add-team-wrap"
+      class="person-wrap  mb-20 dark:text-gray-300 after:w-full after:h-[1px] after:mt-20 after:bg-gray-800 after:dark:bg-gray-300 after:block">
+      <h2 class="mb-5 text-2xl text-indigo-700 dark:text-white font-bold">팀원 추가</h2>
+      <label for="person" class="block text-lg mb-3 text-lg text-slate-700 dark:text-slate-400">팀원 추가하기</label>
+      <input id="person" class="border border-gray-300 rounded-lg py-1 px-4" type="text" required />
+      <button class="btn-person_name rounded-lg py-1 px-4 bg-indigo-600 text-white" type="button">
+        추가
+      </button>
+    </div>
+    <div class="count-wrap dark:text-gray-300">
+      <h2 class="mb-5 text-2xl text-indigo-700 dark:text-white font-bold ">팀 수</h2>
+      <label for="count" class="block text-lg mb-3 text-lg text-slate-700 dark:text-slate-400">몇개의 팀으로 나눌까요?</label>
+      <input id="count" class="border border-gray-300 rounded-lg py-1 pl-8 font-bold text-black" type="number" min="2"
+        max="20" required />
+      <button class="btn-count rounded-lg py-1 px-4 bg-indigo-600 text-white" type="button">
+        완료
+      </button>
+    </div>
+    <div class="team-manager mt-3 mb-3"></div>
+    <div class="team-wrap"></div>
+  </div>
+  <!-- 모달창 -->
+  <div class="modal">
+    <div class="modal-inner p-10">
+      <div class="modal-close">
+        <svg viewbox="0 0 40 40">
+          <path class="close-x" d="M 10,10 L 30,30 M 30,10 L 10,30" />
+        </svg>
+      </div>
+      <div class="modal-delete-member-container">
+        <p>삭제할 팀원을 선택해주세요.</p>
       </div>
     </div>
+  </div>
 
-    <script type="module" src="./js/modal.js"></script>
-    <script src="./js/script.js"></script>
-  </body>
+  <script type="module" src="./js/modal.js"></script>
+  <script src="./js/script.js"></script>
+</body>
+
 </html>
